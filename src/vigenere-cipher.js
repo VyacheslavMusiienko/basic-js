@@ -20,13 +20,56 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 class VigenereCipheringMachine {
-  encrypt() {
-    throw new NotImplementedError('Not implemented');
+  constructor(path) {
+    this.path = path;
+  }
+  encrypt(str, key) {
+    // throw new NotImplementedError('Not implemented');
     // remove line with error and write your code here
+    if (typeof str !== 'string' || typeof key !== 'string') {
+      throw new NotImplementedError('Error');
+    }
+    let arr = str.toLowerCase().split('');
+    let result = '';
+    let letters = 'abcdefghijklmnopqrstuvwxyz';
+    for (let i = 0, j = 0; i < arr.length; j++, i++) {
+      if (arr[i].match(/^[A-Za-z]+$/)) {
+        let alphabet = letters.slice(letters.indexOf(key[j].toLowerCase())) + letters.slice(0, letters.indexOf(key[j].toLowerCase()));
+        result += alphabet[letters.indexOf(arr[i])];
+        if (j === key.length - 1) j = -1;
+      } else {
+        result += arr[i];
+        j--;
+      }
+    }
+    if (this.path === false) return this.reverse(result);
+    else return result.toUpperCase();
   }
   decrypt() {
-    throw new NotImplementedError('Not implemented');
+    // throw new NotImplementedError('Not implemented');
     // remove line with error and write your code here
+    if (typeof str !== 'string' || typeof key !== 'string') {
+      throw new NotImplementedError('Error');
+    }
+    let arr = str.toLowerCase().split('');
+    let result = '';
+    let letters = 'abcdefghijklmnopqrstuvwxyz';
+    for (let i = 0, j = 0; i < arr.length; j++, i++) {
+      if (arr[i].match(/^[A-Za-z]+$/)) {
+        let alphabet = letters.slice(letters.indexOf(key[j].toLowerCase())) + letters.slice(0, letters.indexOf(key[j].toLowerCase()));
+        result += letters[alphabet.indexOf(arr[i])];
+        if (j === key.length - 1) j = -1;
+      } else {
+        result += arr[i];
+        j--;
+      }
+    }
+    if (this.path === false) return this.reverse(result);
+    else return result.toUpperCase();
+  }
+
+  reverse(str) {
+    return str.split('').reverse().join('').toUpperCase();
   }
 }
 
